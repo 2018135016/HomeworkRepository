@@ -1,0 +1,94 @@
+html{
+    background-color:rgb(255, 218, 151);
+}
+
+#info{
+    background-color: #FEFAE2;
+}
+
+h1 {
+    width: max-content;
+    text-align: left;
+    font-family:sans-serif; 
+    font-size: 35px;
+    color:rgb(255, 145, 0);
+    font-weight: bold;
+}
+
+p{
+    margin: 5px;
+}
+
+#tologin {
+    font-size: 17px;
+    background:none;
+    border: 2px solid rgba(0, 0, 0, 0);
+    border-top: 3px solid orange;
+    border-bottom: 3px solid orange;
+}
+
+#tt {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+#birth {
+    width:170px;
+}
+
+#submit{
+    height:32px;
+    width:150px;
+    text-align:center;
+    margin-top: 20px;
+    border: 1px solid green;
+    font-size: 16px;
+    background: rgb(208, 255, 137);
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#cancel{
+    height:32px;
+    width:150px;
+    text-align:center;
+    margin-top: 20px;
+    border: 1px solid orangered;
+    font-size: 16px;
+    background: rgb(255, 179, 151);
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#grade{
+    width:30px;
+}
+
+.essential_star{
+    color: red;
+
+}
+
+.makeborder {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 0px;
+    padding-bottom: 30px;
+    padding-left: 20px;
+    padding-top: 20px;
+    border-bottom: 4px solid orange;
+    border-top: 4px solid orange;
+}
+
+.inputbox{
+    border:2px solid rgb(255, 204, 0);
+    background: none;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    font-size: 15px;
+    font-family:monospace;
+    text-align: center;
+}
+
+
+
