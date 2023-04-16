@@ -6,7 +6,7 @@
     0.5px 0.5px black, -0.5px 0.5px black, 0.5px -0.5px black, -0.5px -0.5px black;
 }
 
-.main_navi{
+.main_bg{
     /*border: 2px solid yellow;*/
     max-width:1010px;
     background-color: #FEFAE2;
@@ -19,6 +19,13 @@
     padding-bottom: 5px;
     border-bottom: 3px solid black;
 
+}
+
+.main_navi{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: stretch;
 }
 
 .main_contents{
@@ -90,7 +97,7 @@
 }
 
 .makehover:hover {
-    transition: all 0.1s linear;
+    transition: all 2s linear;
     overflow: hidden;
 }
 
@@ -109,8 +116,8 @@
     text-align: center;
     text-decoration-line:none ;
     font-size: 10px;
-    bottom: 5%;
-    left: 5%;
+    bottom: 8%;
+    left: 8%;
 }
 
 #mainpage_top {
