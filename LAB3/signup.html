@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+    <link href="main.css" type="text/css" rel="stylesheet"></link>
+    <head>
+        <meta charset="utf-8">
+        <title>sign-up</title>
+    </head>
+    <body>
+        <div id="mainpage_top"></div>
+        <div>        
+            <p id="mainhead1">안녕하세요 여우마켓입니다.</p>
+            <button id="mainhead2" class="tolink" onclick="location.href='index.html'">메인페이지</button>
+            <button id="mainhead3" class="tolink" onclick="location.href='login.html'">로그인</button>
+            <button id="mainhead4" class="tolink" onclick="location.href='signup.html'">회원가입</button>
+        </div>
+        <div class="makeborder main_navi">
+
+            <p id="tt">개인정보 (<span class="essential_star"> *</span> 필수)</p>
+            <form>
+                <p>이름 <input name="user_name" class="inputbox" type="text" placeholder="이름을 입력하세요" autofocus required autocomplete=""><span class="essential_star"> *</span></p>
+                <p>생일 <input name="user_birthday" id="birth" class="inputbox" type="date"></p>
+                <p>학년 <input  name="user_grade" id="grade" class="inputbox" type="number" step="1" min="1" max="6"></p>
+                <p>전화번호 <input name="user_tel" class="inputbox" type="tel" placeholder="(###)###-####"></p>
+                <p>아이디 <input name="user_id" class="inputbox" type="text" placeholder="아이디를 입력하세요" required autocomplete=""><span class="essential_star"> *</span></p>
+                <p>비밀번호 <input name="user_password" class="inputbox" type="password" placeholder="10자 이상" required><span class="essential_star"> *</span></p>
+                <p>비밀번호 확인 <input name="user_password_check" class="inputbox" type="password" required><span class="essential_star"> *</span></p>
+                <p>성별 
+                        <input value="male" name="gender" type="radio" id="gen_male" required><label for="gen_male">남</label> 
+                        <input value="gen_female" name="gender" type="radio" id="gen_female"><label for="gen_female">여</label>
+                        <span class="essential_star"> *</span> 
+                </p>
+                <p>관심 카테고리<br>
+                    <input value="digital" name="ctg_digital" type="checkbox" id="digital"><label for="digital">전자기기</label><br> 
+                    <input value="furniture" name="ctg_furniture" type="checkbox" id="furniture"><label for="furniture">가구/인테리어</label><br>
+                    <input value="fashion" name="ctg_fashion" type="checkbox" id="fashion"><label for="fashion">패션잡화</label><br>
+                    <input value="books" name="ctg_books" type="checkbox" id="books"><label for="books">도서</label><br>
+                    <input value="hobby" name="ctg_hobby" type="checkbox" id="hobby"><label for="hobby">취미</label><br> 
+                </p>
+                <button id="submit" type="submit">등록</button>
+                <button id="cancel" type="button" onclick="location.href='signup.html'">취소</button>
+            </form>
+        </div>
+
+
+    </body>
+</html>

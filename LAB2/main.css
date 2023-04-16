@@ -36,16 +36,16 @@ p{
     width:170px;
 }
 
-#submit{
-    height:32px;
-    width:150px;
-    text-align:center;
-    margin-top: 20px;
-    border: 1px solid green;
-    font-size: 16px;
-    background: rgb(208, 255, 137);
-    padding-left: 30px;
-    padding-right: 30px;
+#submit{    /* #은 id, .은 class를 지정한다. 이 id는 button 태그에 붙었다. */
+    height:32px;  /* 박스의 높이를 설정한다.   */
+    width:150px;   /*  박스의 너비를 설정한다.  */
+    text-align:center;  /*  글자의 정렬  */
+    margin-top: 20px;   /*  경계 바깥의 공간 넓이를 지정한다. top left right bottom으로 구역을 설정할수도 있다. */
+    border: 1px solid green;  /*  박스의 경계를 두께, 형태, 색깔로 지정한다.  */
+    font-size: 16px;   /*  폰트의 크기를 지정한다.  */ 
+    background: rgb(208, 255, 137);   /*  배경색을 지정한다.  */
+    padding-left: 30px;    /*  박스의 너비를 크게한다.  */
+    padding-right: 30px;  /* 박스의 높이를 크게한다.   */
 }
 
 #cancel{

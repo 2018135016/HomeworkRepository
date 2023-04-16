@@ -1,0 +1,330 @@
+.delpurple {
+    text-decoration-line:none ;
+    color: white;
+    text-shadow: -0.5px 0px black, 0px 0.5px black, 0.5px 0px black, 0px -0.5px black, 
+    -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black,
+    0.5px 0.5px black, -0.5px 0.5px black, 0.5px -0.5px black, -0.5px -0.5px black;
+}
+
+.main_navi{
+    /*border: 2px solid yellow;*/
+    max-width:1010px;
+    background-color: #FEFAE2;
+}
+
+.contents_head{
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 3px solid black;
+
+}
+
+.main_contents{
+    /*
+    margin-top: 30px;
+    margin-left: 10px;
+    border: 5px solid black;*/
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 0px;
+    padding-bottom: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    border-bottom: 4px solid orange;
+    border-top: 4px solid orange;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-content: center;
+
+}
+
+.container{
+    /*border: 2px solid orange;*/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.goods{
+    margin-bottom: 3%;
+    border: 2px solid orange;
+    background-color: wheat;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: flex-start;
+}
+
+.tolink {
+    background:none;
+    border: 2px solid rgba(0, 0, 0, 0);
+    border-top: 3px solid orange;
+    border-bottom: 3px solid orange;
+}
+
+.box{
+    /*background-color: orange;*/
+    align-items: center;
+    width: 50%;
+    margin: 0%;
+    position: relative;
+    overflow: hidden;
+}
+
+.imgsize{
+    margin: 7%;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 10%;
+    align-items: center;
+
+}
+
+.makehover:hover {
+    transition: all 0.1s linear;
+    overflow: hidden;
+}
+
+.makehover:hover{
+    transform: scale(1.2);
+}
+
+.distext{
+    display: none;
+}
+
+.makehover:hover + .distext {
+    display: block;
+    width: fit-content;
+    position: absolute;
+    text-align: center;
+    text-decoration-line:none ;
+    font-size: 10px;
+    bottom: 5%;
+    left: 5%;
+}
+
+#mainpage_top {
+    display: none;
+    width:1020px;
+    border-top: 10px solid orange;
+}
+
+#mainhead1{
+    position:relative;
+    left:20px;
+    font-size: 100%;
+    animation-name:headani ;
+    animation-duration: 2s;
+}
+
+#mainhead2{
+    position:relative;
+    left: 20px;
+    animation-name: headaniicon1;
+    animation-duration: 2s;
+}
+
+#mainhead3{
+    position:relative;
+    left: 20px;
+    animation-name: headaniicon2;
+    animation-duration: 2s;
+}
+
+#mainhead4{
+    position:relative;
+    left: 20px;
+    animation-name: headaniicon3;
+    animation-duration: 2s;
+}
+
+#navi_head{
+    left: 10px;
+    border-bottom: 2px solid brown;
+    margin-bottom: 5px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+}
+
+
+@keyframes headani {
+    from {left : 800px;}
+    to {left:20px;}
+}
+
+@keyframes headaniicon1 {
+    from {left : 800px; }
+    10%{left : 800px;}
+    to {left:20px;}
+}
+
+@keyframes headaniicon2 {
+    from {left : 800px;}
+    20%{left : 800px;}
+    to {left:20px;}
+}
+
+@keyframes headaniicon3 {
+    from {left : 800px;}
+    30%{left : 800px;}
+    to {left:20px;}
+}
+
+
+
+@media (max-width:800px){
+    #mainhead1{
+        font-size: 35px;
+    }
+    .tolink{
+        font-size: 8px;
+    }
+    .main_contents{
+        max-width: 800px;
+
+    }
+    .container{
+        width: 100%;
+    }
+    .goods{
+        width:48%;
+    }
+}
+
+@media (max-width:480px){
+    #mainhead1{
+        font-size: 20px;
+    }
+    .tolink{
+        font-size: 5px;
+    }
+    .main_contents{
+        max-width: 480px;
+    }
+    .container{
+        width:100%;
+    }
+    .goods{
+        width:98%;
+    }
+}
+
+@media (min-width:801px){
+    #mainhead1{
+        font-size: 50px;
+    }
+    .tolink{
+        font-size: 15px;
+    }
+    .main_contents{
+        max-width: 1000px;
+    }
+    .container{
+        width:100%;
+    }
+    .goods{
+        width:24%;
+    }
+}
+
+
+
+
+html{
+    background-color:rgb(255, 218, 151);
+}
+
+
+h1 {
+    width: max-content;
+    text-align: left;
+    font-family:sans-serif; 
+    font-size: 35px;
+    color:rgb(255, 145, 0);
+    font-weight: bold;
+}
+
+p{
+    margin: 5px;
+}
+
+#tologin {
+    font-size: 17px;
+    background:none;
+    border: 2px solid rgba(0, 0, 0, 0);
+    border-top: 3px solid orange;
+    border-bottom: 3px solid orange;
+}
+
+#tt {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+#birth {
+    width:170px;
+}
+
+#submit{    /* #은 id, .은 class를 지정한다. 이 id는 button 태그에 붙었다. */
+    height:32px;  /* 박스의 높이를 설정한다.   */
+    width:150px;   /*  박스의 너비를 설정한다.  */
+    text-align:center;  /*  글자의 정렬  */
+    margin-top: 20px;   /*  경계 바깥의 공간 넓이를 지정한다. top left right bottom으로 구역을 설정할수도 있다. */
+    border: 1px solid green;  /*  박스의 경계를 두께, 형태, 색깔로 지정한다.  */
+    font-size: 16px;   /*  폰트의 크기를 지정한다.  */ 
+    background: rgb(208, 255, 137);   /*  배경색을 지정한다.  */
+    padding-left: 30px;    /*  박스의 너비를 크게한다.  */
+    padding-right: 30px;  /* 박스의 높이를 크게한다.   */
+}
+
+#cancel{
+    height:32px;
+    width:150px;
+    text-align:center;
+    margin-top: 20px;
+    border: 1px solid orangered;
+    font-size: 16px;
+    background: rgb(255, 179, 151);
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#grade{
+    width:30px;
+}
+
+.essential_star{
+    color: red;
+
+}
+
+.makeborder {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 0px;
+    padding-bottom: 30px;
+    padding-left: 20px;
+    padding-top: 20px;
+    border-bottom: 4px solid orange;
+    border-top: 4px solid orange;
+}
+
+.inputbox{
+    border:2px solid rgb(255, 204, 0);
+    background: none;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    font-size: 15px;
+    font-family:monospace;
+    text-align: center;
+}
