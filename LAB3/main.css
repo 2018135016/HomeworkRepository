@@ -6,12 +6,6 @@
     0.5px 0.5px black, -0.5px 0.5px black, 0.5px -0.5px black, -0.5px -0.5px black;
 }
 
-.main_bg{
-    /*border: 2px solid yellow;*/
-    max-width:1010px;
-    background-color: #FEFAE2;
-}
-
 .contents_head{
     text-align: center;
     font-size: 20px;
@@ -42,7 +36,8 @@
     padding-top: 20px;
     border-bottom: 4px solid orange;
     border-top: 4px solid orange;
-
+    background-color: #FEFAE2;
+    
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -316,6 +311,7 @@ p{
 }
 
 .makeborder {
+    background-color: #FEFAE2;
     margin-top: 30px;
     margin-bottom: 30px;
     margin-left: 0px;
