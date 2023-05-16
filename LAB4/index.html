@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html>
+<link href="main.css" type="text/css" rel="stylesheet">
+</link>
+
+<head>
+    <meta charset="utf-8">
+    <title>E-commerce</title>
+</head>
+
+<body>
+    <div id="center">
+        <div id="mainpage_top"></div>
+        <div>
+            <p id="mainhead1">안녕하세요 여우마켓입니다.</p>
+            <button id="mainhead2" class="tolink" onclick="location.href='index.html'">메인페이지</button>
+            <button id="mainhead3" class="tolink" onclick="location.href='login.html'">로그인</button>
+            <button id="mainhead4" class="tolink" onclick="location.href='signup.html'">회원가입</button>
+        </div>
+        <div class="main_navi">
+            <div class="main_contents">
+                <p class="contents_head" style="font-size: 200%;">상품</p>
+                <div class="container">
+                    <div class="search">
+                        <div class="pdselect">
+                            <h3 style="margin-bottom: 10%;">상품 찾아보기</h3>
+                            <p>카테고리</p>
+                            <select class="s" id="cate">
+                                <option selected value="none">없음</option>
+                                <option value="red">붉은 여우</option>
+                                <option value="silver">은 여우</option>
+                                <option value="fennec">사막 여우</option>
+                                <option value="gray">회색 여우</option>
+                                <option value="arctic">북극 여우</option>
+                                <option value="bboogi">여우?</option>
+                            </select>
+                            <p>검색</p>
+                            <input type="text" placeholder="Red Fox" class="s" id="foxsearch">
+                            <p>정렬</p>
+                            <select class="s" id="sorting">
+                                <option selected value="newest">최신 순</option>
+                                <option value="oldest">오래된 순</option>
+                                <option value="name">이름 순</option>
+                                <option value="highprice">높은 가격 순</option>
+                                <option value="lowprice">낮은 가격 순</option>
+                            </select>
+                            <button onclick="filter()" class="filter s">검색하기</button>
+                        </div>
+                    </div>
+                    <div class="goods" id="goods"></div>
+                </div>
+                <div id="end" class="0"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function loadproducts() { 
+            return fetch("product.json")
+                .then((response) => response.json())
+                .then((data) => data.products)
+        } //JSON 파일을 fetch한다.
+
+        var intersectionObserver = new IntersectionObserver(function (entries) {
+            if (entries[0].intersectionRatio <= 0) return;
+            let itemnum = Number(document.getElementById("end").className);
+            if (itemnum != 0) { loaditems(itemnum); }
+        }) //페이지가 맨 아래까지 스크롤되면 loaditems 함수를 통해 상품을 더 로드시킨다.
+
+        function numbercomma(money) {
+            let strmoney = money.toString();
+            let newmoney = strmoney.substr(0, (strmoney.length - 1) % 3 + 1);
+            for (let i = (strmoney.length - 1) % 3 + 1; i < strmoney.length; i += 3) {
+                newmoney = newmoney + "," + strmoney.substr(i, 3);
+            }
+            return newmoney;
+        } //숫자에 콤마를 찍어 리턴하는 함수
+
+        function mouseover(num) {
+            document.getElementById("foximg" + num).src = 'images/fox' + num + '_alter.jpg'
+            loadproducts().then((data) => {
+                document.getElementById("foxp" + num).innerHTML = "" + data[num].name + "<br><br>Price : " + numbercomma(data[num].price) + "&#36";
+            })
+        } //마우스가 이미지에 오버되면 어두운 사진으로 바꾸고 설명과 가격을 출력한다.
+
+        function mouseout(num) {
+            document.getElementById("foximg" + num).src = 'images/fox' + num + '.jpg'
+            document.getElementById("foxp" + num).innerHTML = "";
+        } //마우스가 이미지에서 벗어나면 원래 사진으로 바꾸고 설명을 제거한다.
+
+        function filter() {
+            document.getElementById("goods").innerHTML = "";
+            document.getElementById("end").className = 0;
+            loaditems(0);
+        } //페이지 로드시 및 필터를 적용하면 실행되는 함수
+
+        function loaditems(Num) { //상품을 로드한다.
+            loadproducts().then((data) => {
+                var foxsearch = document.getElementById("foxsearch");
+                var cate = document.getElementById("cate");
+                var sorting = document.getElementById("sorting");
+                var foxlst = [];
+
+                if (Num > data.length) { return; }
+
+                for (let objs of data) {
+                    if (cate.value != 'none' && objs.cate.indexOf(cate.value) == -1) { continue; }
+                    let ispushed = false;
+                    for (let kwords of objs.keywords) {
+                        if (ispushed) { break; }
+                        for (let searchkwords of foxsearch.value.split(" ")) {
+                            if (ispushed) { break; }
+                            if (kwords.indexOf(searchkwords.toLowerCase()) != -1) {
+                                foxlst.push(objs);
+                                ispushed = true;
+                            }
+                        }
+                    }
+                }
+
+                function sortmet(met, obj) {
+                    if (met == 'newest') { return -obj.order; }
+                    if (met == 'oldest') { return obj.order; }
+                    if (met == 'name') { return obj.name.toUpperCase(); }
+                    if (met == 'highprice') { return -obj.price; }
+                    if (met == 'lowprice') { return obj.price; }
+                    return 0;
+                }
+
+
+                foxlst.sort(function (a, b) {
+                    let sorta = sortmet(sorting.value, a);
+                    let sortb = sortmet(sorting.value, b);
+                    if (sorta < sortb) { return -1; }
+                    if (sorta > sortb) { return 1; }
+                    else return 0;
+                })
+
+                let str = '';
+
+                let cnt = 0;
+
+                for (let i = Num; i < foxlst.length; i++) {
+                    let Order = foxlst[i].order;
+                    cnt++;
+                    str = str +
+                        '<div class="box" onmouseout="mouseout(' + Order + ')">' +
+                        '<a href=' + foxlst[i].uri + ' class="delpurple" id="foxa' + Order + '">' +
+                        '<img src=' + foxlst[i].uri + ' class="imgsize makehover" onmouseover="mouseover(' + Order + ')" onmouseout="mouseout(' + Order + ')" id="foximg' + Order + '">' +
+                        '<p class="distext" id="foxp' + Order + '" onmouseover="mouseover(' + Order + ')"></p>' +
+                        '</a>' +
+                        '</div>'
+                        ;
+                    if (cnt == 6) { break; }
+                }
+                document.getElementById("goods").insertAdjacentHTML('beforeend', str);
+                document.getElementById("end").className = Num + 6;
+            })
+        }
+
+        filter();
+        intersectionObserver.observe(document.getElementById("end"));
+
+    </script>
+</body>
+
+
+</html>
