@@ -124,20 +124,23 @@
                 let foxorder = "";
                 for (let i of foxlst) { foxorder = foxorder + i.order.toString() + ","; }
                 document.getElementById("end").dataset.foxlst = foxorder.slice(0, foxorder.length - 1); //정렬 결과를 html에 저장한다.
-
-                iteminput(0);
+                if (foxorder == "") {  //검색결과가 존재하지 않으면 표시할 메세지
+                    let str = '<img src="images/fox_empty.png" class="imgsize makehover"><p class="pdselect">표시할 여우가 존재하지 않습니다.</p>';
+                    document.getElementById("goods").insertAdjacentHTML('beforeend', str);
+                }
+                else { iteminput(0); }
 
             })
         }
 
         function sortmet(met, obj) { //정렬 기준 설정
-                    if (met == 'newest') { return -obj.order; }
-                    if (met == 'oldest') { return obj.order; }
-                    if (met == 'name') { return obj.name.toUpperCase(); }
-                    if (met == 'highprice') { return -obj.price; }
-                    if (met == 'lowprice') { return obj.price; }
-                    return 0;
-                }
+            if (met == 'newest') { return -obj.order; }
+            if (met == 'oldest') { return obj.order; }
+            if (met == 'name') { return obj.name.toUpperCase(); }
+            if (met == 'highprice') { return -obj.price; }
+            if (met == 'lowprice') { return obj.price; }
+            return 0;
+        }
 
         function mouseover(num) {
             document.getElementById("foximg" + num).src = 'images/fox' + num + '_alter.jpg'
@@ -159,7 +162,7 @@
             }
             return newmoney;
         } //숫자에 콤마를 찍어 리턴하는 함수
-        
+
         var intersectionObserver = new IntersectionObserver(function (entries) {
             if (entries[0].intersectionRatio <= 0) return;
             let itemnum = Number(document.getElementById("end").dataset.value);
