@@ -50,32 +50,94 @@
                     </div>
                     <div class="goods" id="goods"></div>
                 </div>
-                <div id="end" class="0"></div>
+                <div type="text" id="end" data-value="0" data-foxlst=""></div>
             </div>
         </div>
     </div>
 
     <script>
-        function loadproducts() { 
+        function loadproducts() {
             return fetch("product.json")
                 .then((response) => response.json())
                 .then((data) => data.products)
         } //JSON 파일을 fetch한다.
 
-        var intersectionObserver = new IntersectionObserver(function (entries) {
-            if (entries[0].intersectionRatio <= 0) return;
-            let itemnum = Number(document.getElementById("end").className);
-            if (itemnum != 0) { loaditems(itemnum); }
-        }) //페이지가 맨 아래까지 스크롤되면 loaditems 함수를 통해 상품을 더 로드시킨다.
+        function iteminput(Num) {  //나열할 리스트에 따라 아이템을 나열한다.
+            let listoffox = document.getElementById("end").dataset.foxlst.split(",")
+            if (Num > listoffox.length) { return; }
+            loadproducts().then((data) => {
+                let str = '';
+                let cnt = 0;
 
-        function numbercomma(money) {
-            let strmoney = money.toString();
-            let newmoney = strmoney.substr(0, (strmoney.length - 1) % 3 + 1);
-            for (let i = (strmoney.length - 1) % 3 + 1; i < strmoney.length; i += 3) {
-                newmoney = newmoney + "," + strmoney.substr(i, 3);
-            }
-            return newmoney;
-        } //숫자에 콤마를 찍어 리턴하는 함수
+                for (let i = Num; i < listoffox.length; i++) {
+                    let Order = listoffox[i];
+
+                    cnt++;
+                    str = str +
+                        '<div class="box" onmouseout="mouseout(' + Order + ')">' +
+                        '<a href=' + data[Order].uri + ' class="delpurple" id="foxa' + Order + '">' +
+                        '<img src=' + data[Order].uri + ' class="imgsize makehover" onmouseover="mouseover(' + Order + ')" onmouseout="mouseout(' + Order + ')" id="foximg' + Order + '">' +
+                        '<p class="distext" id="foxp' + Order + '" onmouseover="mouseover(' + Order + ')"></p>' +
+                        '</a>' +
+                        '</div>'
+                        ;
+                    if (cnt == 6) { break; }
+                }
+                document.getElementById("goods").insertAdjacentHTML('beforeend', str);
+                document.getElementById("end").dataset.value = (Num + 6).toString();
+            })
+
+        }
+
+        function filter() { //페이지 로드시 또는 필터 설정시 아이템을 나열한다.
+            document.getElementById("goods").innerHTML = ""; //goods 태그 내의 내용 초기화
+            document.getElementById("end").dataset.value = 0; //순번 초기화
+            loadproducts().then((data) => {
+                var foxsearch = document.getElementById("foxsearch");
+                var cate = document.getElementById("cate");
+                var sorting = document.getElementById("sorting"); //검색어, 카테고리, 정렬 값을 가져온다.
+                var foxlst = [];
+
+                for (let objs of data) {  //카테고리 및 검색 키워드에 맞는 결과를 뽑는다.
+                    if (cate.value != 'none' && objs.cate.indexOf(cate.value) == -1) { continue; }
+                    let ispushed = false;
+                    for (let kwords of objs.keywords) {
+                        if (ispushed) { break; }
+                        for (let searchkwords of foxsearch.value.split(" ")) { //검색어를 공백에 따라 파싱하여 키워드의 일부가 있는지 확인한다.
+                            if (ispushed) { break; }
+                            if (kwords.indexOf(searchkwords.toLowerCase()) != -1) {
+                                foxlst.push(objs);
+                                ispushed = true;
+                            }
+                        }
+                    }
+                }
+
+                foxlst.sort(function (a, b) { //기준에 따라 정렬한다.
+                    let sorta = sortmet(sorting.value, a);
+                    let sortb = sortmet(sorting.value, b);
+                    if (sorta < sortb) { return -1; }
+                    if (sorta > sortb) { return 1; }
+                    else return 0;
+                })
+
+                let foxorder = "";
+                for (let i of foxlst) { foxorder = foxorder + i.order.toString() + ","; }
+                document.getElementById("end").dataset.foxlst = foxorder.slice(0, foxorder.length - 1); //정렬 결과를 html에 저장한다.
+
+                iteminput(0);
+
+            })
+        }
+
+        function sortmet(met, obj) { //정렬 기준 설정
+                    if (met == 'newest') { return -obj.order; }
+                    if (met == 'oldest') { return obj.order; }
+                    if (met == 'name') { return obj.name.toUpperCase(); }
+                    if (met == 'highprice') { return -obj.price; }
+                    if (met == 'lowprice') { return obj.price; }
+                    return 0;
+                }
 
         function mouseover(num) {
             document.getElementById("foximg" + num).src = 'images/fox' + num + '_alter.jpg'
@@ -89,75 +151,21 @@
             document.getElementById("foxp" + num).innerHTML = "";
         } //마우스가 이미지에서 벗어나면 원래 사진으로 바꾸고 설명을 제거한다.
 
-        function filter() {
-            document.getElementById("goods").innerHTML = "";
-            document.getElementById("end").className = 0;
-            loaditems(0);
-        } //페이지 로드시 및 필터를 적용하면 실행되는 함수
-
-        function loaditems(Num) { //상품을 로드한다.
-            loadproducts().then((data) => {
-                var foxsearch = document.getElementById("foxsearch");
-                var cate = document.getElementById("cate");
-                var sorting = document.getElementById("sorting");
-                var foxlst = [];
-
-                if (Num > data.length) { return; }
-
-                for (let objs of data) {
-                    if (cate.value != 'none' && objs.cate.indexOf(cate.value) == -1) { continue; }
-                    let ispushed = false;
-                    for (let kwords of objs.keywords) {
-                        if (ispushed) { break; }
-                        for (let searchkwords of foxsearch.value.split(" ")) {
-                            if (ispushed) { break; }
-                            if (kwords.indexOf(searchkwords.toLowerCase()) != -1) {
-                                foxlst.push(objs);
-                                ispushed = true;
-                            }
-                        }
-                    }
-                }
-
-                function sortmet(met, obj) {
-                    if (met == 'newest') { return -obj.order; }
-                    if (met == 'oldest') { return obj.order; }
-                    if (met == 'name') { return obj.name.toUpperCase(); }
-                    if (met == 'highprice') { return -obj.price; }
-                    if (met == 'lowprice') { return obj.price; }
-                    return 0;
-                }
-
-
-                foxlst.sort(function (a, b) {
-                    let sorta = sortmet(sorting.value, a);
-                    let sortb = sortmet(sorting.value, b);
-                    if (sorta < sortb) { return -1; }
-                    if (sorta > sortb) { return 1; }
-                    else return 0;
-                })
-
-                let str = '';
-
-                let cnt = 0;
-
-                for (let i = Num; i < foxlst.length; i++) {
-                    let Order = foxlst[i].order;
-                    cnt++;
-                    str = str +
-                        '<div class="box" onmouseout="mouseout(' + Order + ')">' +
-                        '<a href=' + foxlst[i].uri + ' class="delpurple" id="foxa' + Order + '">' +
-                        '<img src=' + foxlst[i].uri + ' class="imgsize makehover" onmouseover="mouseover(' + Order + ')" onmouseout="mouseout(' + Order + ')" id="foximg' + Order + '">' +
-                        '<p class="distext" id="foxp' + Order + '" onmouseover="mouseover(' + Order + ')"></p>' +
-                        '</a>' +
-                        '</div>'
-                        ;
-                    if (cnt == 6) { break; }
-                }
-                document.getElementById("goods").insertAdjacentHTML('beforeend', str);
-                document.getElementById("end").className = Num + 6;
-            })
-        }
+        function numbercomma(money) {
+            let strmoney = money.toString();
+            let newmoney = strmoney.substr(0, (strmoney.length - 1) % 3 + 1);
+            for (let i = (strmoney.length - 1) % 3 + 1; i < strmoney.length; i += 3) {
+                newmoney = newmoney + "," + strmoney.substr(i, 3);
+            }
+            return newmoney;
+        } //숫자에 콤마를 찍어 리턴하는 함수
+        
+        var intersectionObserver = new IntersectionObserver(function (entries) {
+            if (entries[0].intersectionRatio <= 0) return;
+            let itemnum = Number(document.getElementById("end").dataset.value);
+            if (itemnum == 0) { return; } //itemnum값이 0이면 filter함수가 자동으로 로드하므로 화면상에 보여도 무시한다.
+            iteminput(itemnum);
+        }) //페이지가 맨 아래까지 스크롤되면 loaditems 함수를 통해 상품을 더 로드시킨다.
 
         filter();
         intersectionObserver.observe(document.getElementById("end"));
