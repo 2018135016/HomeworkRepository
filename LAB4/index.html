@@ -74,11 +74,9 @@
 
                     cnt++;
                     str = str +
-                        '<div class="box" onmouseout="mouseout(' + Order + ')">' +
-                        '<a href=' + data[Order].uri + ' class="delpurple" id="foxa' + Order + '">' +
-                        '<img src=' + data[Order].uri + ' class="imgsize makehover" onmouseover="mouseover(' + Order + ')" onmouseout="mouseout(' + Order + ')" id="foximg' + Order + '">' +
-                        '<p class="distext" id="foxp' + Order + '" onmouseover="mouseover(' + Order + ')"></p>' +
-                        '</a>' +
+                        '<div class="box" >' +
+                        '<img src=' + data[Order].uri + ' class="imgsize makehover" onclick="mouseover(' + Order + ')" id="foximg' + Order + '">' +
+                        '<p class="distext" id="foxp' + Order + '" onclick="mouseover(' + Order + ')" data-tf="F"></p>' +
                         '</div>'
                         ;
                     if (cnt == 6) { break; }
@@ -143,16 +141,18 @@
         }
 
         function mouseover(num) {
-            document.getElementById("foximg" + num).src = 'images/fox' + num + '_alter.jpg'
-            loadproducts().then((data) => {
-                document.getElementById("foxp" + num).innerHTML = "" + data[num].name + "<br><br>Price : " + numbercomma(data[num].price) + "&#36";
-            })
-        } //마우스가 이미지에 오버되면 어두운 사진으로 바꾸고 설명과 가격을 출력한다.
-
-        function mouseout(num) {
-            document.getElementById("foximg" + num).src = 'images/fox' + num + '.jpg'
-            document.getElementById("foxp" + num).innerHTML = "";
-        } //마우스가 이미지에서 벗어나면 원래 사진으로 바꾸고 설명을 제거한다.
+            if (document.getElementById("foxp" + num).dataset.tf == "F") {
+                document.getElementById("foxp" + num).dataset.tf = "T";
+                document.getElementById("foximg" + num).src = 'images/fox' + num + '_alter.jpg'
+                loadproducts().then((data) => {
+                    document.getElementById("foxp" + num).innerHTML = "" + data[num].name + "<br><br>Price : " + numbercomma(data[num].price) + "&#36";
+                })
+            } else {
+                document.getElementById("foxp" + num).dataset.tf = "F";
+                document.getElementById("foximg" + num).src = 'images/fox' + num + '.jpg'
+                document.getElementById("foxp" + num).innerHTML = ""
+            }
+        } //이미지를 클릭하면 어두운 사진으로 바꾸고 설명과 가격을 출력한다. 다시 클릭하면 원래대로 돌아온다.
 
         function numbercomma(money) {
             let strmoney = money.toString();
