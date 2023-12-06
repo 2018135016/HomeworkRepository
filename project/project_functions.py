@@ -90,12 +90,13 @@ def data_generation(location):
     academy_classification=['입시검정학원수', '비입시검정학원수', '수강자수']
     academy_2004_2008 = pd.read_csv(location+"academy_2004_2008.csv", index_col=False)
 
-    for year in range(2004,2021):
+    for year in range(2004,2021): # dataframe을 초기화
         for c in academy_classification:
             key=str(year)+" "+c
             academy_dict[key]=['0']*26
     academy=pd.DataFrame(academy_dict)  
 
+    # 초기화한 dataframe의 적절한 위치에 데이터를 삽입
     dict_for_academy_2004_2008={'입시검정및보충학습':'입시검정학원수', '예능':'비입시검정학원수', '국제실무':'비입시검정학원수', '소계':'수강자수'}
     for year in range(2004, 2009):
         for i in range(1,50):
@@ -124,12 +125,13 @@ def data_generation(location):
 
     adv_rate_dict = {'자치구':regions}
     adv_rate_classification = ['졸업자수', '진학자수', '진학률']
-    for year in range(2004,2021):
+    for year in range(2004,2021): # dataframe을 초기화
         for c in adv_rate_classification:
             key=str(year)+" "+c
             adv_rate_dict[key]=['0']*26
     adv_rate = pd.DataFrame(adv_rate_dict)
 
+    # 초기화한 dataframe의 적절한 위치에 데이터를 삽입
     adv_rate_2000_2010 = pd.read_csv(location+"adv_rate_2000_2010.csv", index_col=False)
     dict_for_adv_rate_2000_2010={'졸업자':'졸업자수', '진학자':'진학자수', '진학률 (%)':'진학률'}
     for year in range(2004, 2011):
@@ -162,6 +164,7 @@ def print_graph(location, font):
     adv_rate = pd.read_csv(location+"adv_rate.csv", index_col=False)
     regions = list(pd.read_csv(location+"academy_2004_2008.csv", index_col=False)['자치구별(2)'][2:])
 
+    #한글 폰트 설정
     plt.rcParams['font.family'] = font
     plt.rcParams['axes.unicode_minus']=False
 
